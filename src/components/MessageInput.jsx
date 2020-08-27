@@ -1,27 +1,30 @@
 import React, { useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
-import _ from 'lodash';
-import axios from 'axios';
-import routes from '../routes';
 import UserContext from '../Context';
+import { asyncActions } from '../slices';
 
 export default () => {
-  const id = useSelector((state) => state.channels.id);
-  console.log(id);
+  const id = useSelector((state) => state.channels.currentChannelId);
 
   const username = useContext(UserContext);
-  console.log(username);
+  const dispatch = useDispatch();
 
-  const { channelMessagesPath } = routes;
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
+    if (values.length === 0) return;
+
     const data = {
       channelId: id,
       text: values.message,
       username,
     };
-    console.log(data);
-    return axios.post(channelMessagesPath(id), data);
+
+    try {
+      await dispatch(asyncActions.addMessage(data, id));
+      resetForm();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const formik = useFormik({

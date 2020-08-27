@@ -1,13 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
-import _ from 'lodash';
 
 export default () => {
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
-  const channels = useSelector((state) => state.channels.channels);
+  const channels = useSelector((state) => state.channels.channelsList);
   console.log(channels);
-  console.log(currentChannelId);
   return (
     <div className="col-3 border-right overflow-auto px-0 h-100">
       <ul className="nav flex-column nav-pills nav-fill">
