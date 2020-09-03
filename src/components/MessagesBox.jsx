@@ -6,10 +6,9 @@ const MessagesBox = () => {
   const messages = useSelector((state) => state.messages.filter(
     (message) => message.channelId === currentChannelId,
   ));
-  // console.log(messages);
 
-  const scrollDown = useRef();
-  useEffect(() => scrollDown.current.scrollIntoView());
+  const scrollToBottom = useRef();
+  useEffect(() => scrollToBottom.current.scrollIntoView());
 
   return (
     <div id="mesages-box" className="chat-messages overflow-auto mb-3 ml-3">
@@ -21,9 +20,9 @@ const MessagesBox = () => {
             {' '}
             {message}
           </span>
-          <div ref={scrollDown} />
         </div>
       ))}
+      <div ref={scrollToBottom} />
     </div>
   );
 };
