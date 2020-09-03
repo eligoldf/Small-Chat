@@ -7,6 +7,12 @@ const channelSlice = createSlice({
     channelsList: [],
     currentChannelId: 1,
   },
+  reducers: {
+    setCurrentChannel(state, action) {
+      const { id } = action.payload;
+      state.currentChannelId = id;
+    },
+  },
 });
 
 export const { actions } = channelSlice;

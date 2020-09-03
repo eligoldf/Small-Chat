@@ -1,10 +1,17 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import cn from 'classnames';
+import { actions } from '../slices/index';
 
 const Channels = () => {
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const channels = useSelector((state) => state.channels.channelsList);
+  const dispatch = useDispatch();
+
+  const setActiveChannel = (id) => (e) => {
+    e.preventDefault();
+    dispatch(actions.setCurrentChannel({ id }));
+  };
 
   return (
     <div className="col-3 border-right h-100">
@@ -25,6 +32,7 @@ const Channels = () => {
               <button
                 type="button"
                 className={classes}
+                onClick={setActiveChannel(id)}
               >
                 <b># </b>
                 {name}

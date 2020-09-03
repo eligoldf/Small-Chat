@@ -23,7 +23,9 @@ const messageSlice = createSlice({
   },
   extraReducers: {
     [addMessage.fulfilled]: () => {},
-    [addMessage.rejected]: () => { throw new Error(); },
+    [addMessage.rejected]: () => {
+      throw new Error();
+    },
   },
 });
 
