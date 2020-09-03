@@ -2,13 +2,17 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-export default () => {
+const Channels = () => {
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const channels = useSelector((state) => state.channels.channelsList);
-  console.log(channels);
+
   return (
-    <div className="col-3 border-right overflow-auto px-0 h-100">
-      <ul className="nav flex-column nav-pills nav-fill">
+    <div className="col-3 border-right h-100">
+      <div className="d-flex mb-2">
+        <b>Channels</b>
+        <button type="button" className="btn btn-link p-0 ml-auto"><b>+</b></button>
+      </div>
+      <ul className="nav flex-column">
         {channels.map(({ name, id }) => {
           const classes = cn({
             btn: true,
@@ -17,11 +21,12 @@ export default () => {
             active: id === currentChannelId,
           });
           return (
-            <li key={id} className="nav-item">
+            <li key={id} className="nav-item nav-pills nav-fill">
               <button
                 type="button"
                 className={classes}
               >
+                <b># </b>
                 {name}
               </button>
             </li>
@@ -31,3 +36,5 @@ export default () => {
     </div>
   );
 };
+
+export default Channels;

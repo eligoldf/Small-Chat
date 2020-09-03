@@ -1,29 +1,39 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
+import { Form } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import UserContext from '../Context';
 import { asyncActions } from '../slices';
 
-export default () => {
+const MessageInput = () => {
   const id = useSelector((state) => state.channels.currentChannelId);
 
   const username = useContext(UserContext);
   const dispatch = useDispatch();
 
-  const handleSubmit = async (values, { resetForm }) => {
-    if (values.length === 0) return;
+  const { t } = useTranslation();
+
+  const handleSubmit = async (values, { resetForm, setStatus, setSubmitting }) => {
+    if (values.message.length === 0) {
+      setStatus(t('errors.requiredMsg'));
+      return;
+    }
 
     const data = {
       channelId: id,
-      text: values.message,
+      message: values.message,
       username,
     };
 
     try {
       await dispatch(asyncActions.addMessage(data, id));
+      setSubmitting(false);
       resetForm();
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      setSubmitting(false);
+      resetForm();
+      setStatus(t('errors.network'));
     }
   };
 
@@ -36,11 +46,22 @@ export default () => {
 
   return (
     <div className="mt-auto">
-      <div className="form-group mx-sm-5">
-        <form onSubmit={formik.handleSubmit} className="mr-4">
-          <input type="text" className="form-control" id="message" value={formik.values.message} onChange={formik.handleChange} />
-        </form>
-      </div>
+      <Form onSubmit={formik.handleSubmit} className="ml-4">
+        <Form.Group>
+          <Form.Control
+            name="message"
+            type="text"
+            value={formik.values.message}
+            onChange={formik.handleChange}
+            isInvalid={!!formik.status}
+          />
+          <Form.Control.Feedback type="invalid">
+            {formik.status}
+          </Form.Control.Feedback>
+        </Form.Group>
+      </Form>
     </div>
   );
 };
+
+export default MessageInput;

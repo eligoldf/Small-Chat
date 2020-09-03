@@ -5,8 +5,8 @@ import routes from '../routes';
 
 const addMessage = createAsyncThunk(
   'messages/addMessage',
-  async ({ channelId, username, text }) => {
-    const data = { attributes: { username, text } };
+  async ({ channelId, username, message }) => {
+    const data = { attributes: { username, message } };
     const url = routes.channelMessagesPath(channelId);
     await axios.post(url, { data });
   },
@@ -16,13 +16,8 @@ const messageSlice = createSlice({
   name: 'messages',
   initialState: [],
   reducers: {
-    initMessages(state, action) {
-      const { payload } = action;
-      state = payload;
-    },
     addMessageSuccess(state, action) {
       const { data: { attributes } } = action.payload;
-      console.log(attributes);
       state.push(attributes);
     },
   },
