@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { Form } from 'react-bootstrap';
@@ -13,6 +13,9 @@ const MessageInput = () => {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
+
+  const inputRef = useRef();
+  useEffect(() => inputRef.current.focus());
 
   const handleSubmit = async (values, { resetForm, setStatus, setSubmitting }) => {
     if (values.message.length === 0) {
@@ -54,6 +57,7 @@ const MessageInput = () => {
             value={formik.values.message}
             onChange={formik.handleChange}
             isInvalid={!!formik.status}
+            ref={inputRef}
           />
           <Form.Control.Feedback type="invalid">
             {formik.status}

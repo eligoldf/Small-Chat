@@ -10,6 +10,8 @@ i18n
           errors: {
             network: 'There is a Network problem.',
             requiredMsg: 'You must enter message.',
+            unremovable: 'You can remove only new channels.',
+            unrenamable: 'You can rename only new channels.',
           },
         },
       },

@@ -36,7 +36,10 @@ export default () => {
   }
 
   const socket = io();
-  socket.on('newMessage', (data) => store.dispatch(actions.addMessageSuccess(data)));
+  socket.on('newMessage', ({ data }) => store.dispatch(actions.addMessageSuccess(data.attributes)));
+  socket.on('newChannel', ({ data }) => store.dispatch(actions.addChannelSuccess(data.attributes)));
+  socket.on('removeChannel', ({ data: { id } }) => store.dispatch(actions.removeChannelSuccess(id)));
+  socket.on('renameChannel', ({ data }) => store.dispatch(actions.renameChannelSuccess(data)));
 
   const root = document.getElementById('chat');
 
