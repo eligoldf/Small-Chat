@@ -7,9 +7,12 @@ if (process.env.NODE_ENV !== 'production') {
 } else {
   // eslint-disable-next-line no-unused-vars
   const rollbar = new Rollbar({
-    accessToken: '48b7f0bfa52142aca2ca7effbf552ab9',
+    accessToken: '20f3491c65a54154897a139de3c41ebd',
     captureUncaught: true,
     captureUnhandledRejections: true,
+    payload: {
+      environment: 'production',
+    },
   });
 }
 
