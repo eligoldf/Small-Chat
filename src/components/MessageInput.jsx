@@ -62,8 +62,8 @@ const MessageInput = () => {
             disabled={formik.isSubmitting}
           />
           { formik.errors.message && <div className="invalid-feedback">{formik.errors.message}</div> }
-          { formik.errors.network && <div className="invalid-feedback">{formik.errors.network}</div> }
         </Form.Group>
+        { formik.errors.network && <div className="alert alert-primary">{formik.errors.network}</div> }
       </Form>
     </div>
   );
