@@ -23,15 +23,15 @@ const Channels = () => {
     return <Modal />;
   };
 
-  const handleAdd = () => {
+  const handleAddChannel = () => {
     dispatch(actions.showModal('adding'));
   };
 
-  const handleRemove = () => {
+  const handleRemoveChannel = () => {
     dispatch(actions.showModal('removing'));
   };
 
-  const handleRename = () => {
+  const handleRenameChannel = () => {
     dispatch(actions.showModal('renaming'));
   };
 
@@ -39,13 +39,13 @@ const Channels = () => {
     <div className="col-3 border-right h-100">
       <div className="d-flex mb-2">
         <b>Channels</b>
-        <button type="button" className="btn p-0 ml-auto" onClick={handleAdd}>
+        <button type="button" className="btn p-0 ml-auto" onClick={handleAddChannel}>
           <PlusCircleIcon size={16} />
         </button>
-        <button type="button" className="btn p-0 ml-2" onClick={handleRemove}>
+        <button type="button" className="btn p-0 ml-2" onClick={handleRemoveChannel}>
           <TrashcanIcon size={16} />
         </button>
-        <button type="button" className="btn p-0 ml-2" onClick={handleRename}>
+        <button type="button" className="btn p-0 ml-2" onClick={handleRenameChannel}>
           <PencilIcon size={16} />
         </button>
       </div>

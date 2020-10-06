@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import UserContext from '../Context';
@@ -17,12 +18,11 @@ const MessageInput = () => {
   const inputRef = useRef();
   useEffect(() => inputRef.current.focus());
 
-  const handleSubmit = async (values, { resetForm, setStatus, setSubmitting }) => {
-    if (values.message.length === 0) {
-      setStatus(t('errors.requiredMsg'));
-      return;
-    }
+  const validationSchema = Yup.object({
+    message: Yup.string().min(1).required(t('errors.requiredMsg')),
+  });
 
+  const handleSubmit = async (values, { resetForm, setFieldError, setSubmitting }) => {
     const data = {
       channelId: id,
       message: values.message,
@@ -36,7 +36,7 @@ const MessageInput = () => {
     } catch (error) {
       setSubmitting(false);
       resetForm();
-      setStatus(t('errors.network'));
+      setFieldError('network', t('errors.network'));
     }
   };
 
@@ -44,6 +44,7 @@ const MessageInput = () => {
     initialValues: {
       message: '',
     },
+    validationSchema,
     onSubmit: handleSubmit,
   });
 
@@ -56,12 +57,12 @@ const MessageInput = () => {
             type="text"
             value={formik.values.message}
             onChange={formik.handleChange}
-            isInvalid={!!formik.status}
+            isInvalid={!!formik.errors.message}
             ref={inputRef}
+            disabled={formik.isSubmitting}
           />
-          <Form.Control.Feedback type="invalid">
-            {formik.status}
-          </Form.Control.Feedback>
+          { formik.errors.message && <div className="invalid-feedback">{formik.errors.message}</div> }
+          { formik.errors.network && <div className="invalid-feedback">{formik.errors.network}</div> }
         </Form.Group>
       </Form>
     </div>
