@@ -35,7 +35,7 @@
     "@popperjs/core": "^2.4.4",
     "@primer/octicons-react": "^11.0.0",
     "@reduxjs/toolkit": "^1.4.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-loader": "^8.1.0",
     "bootstrap": "^4.5.0",
     "classnames": "^2.2.6",
